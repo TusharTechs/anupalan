@@ -4,7 +4,20 @@
 
 **Anupalan turns High Court judgments into tracked, deadline-bound tasks for government departments, before they become contempt cases.**
 
-**Live demo:** https://tushartechs.github.io/anupalan/ (read-only replay of 400 real Punjab & Haryana High Court orders)
+## Links
+
+| What it is | Link |
+|---|---|
+| Demo video (4 min pitch with a live walkthrough) | [youtu.be/uj6y0-Huw84](https://youtu.be/uj6y0-Huw84) |
+| Live demo (read-only replay of 400 real Punjab & Haryana High Court orders) | [tushartechs.github.io/anupalan](https://tushartechs.github.io/anupalan/) |
+| Source code | [github.com/TusharTechs/anupalan](https://github.com/TusharTechs/anupalan) |
+| End-to-end architecture diagram | [docs/architecture-end-to-end.png](docs/architecture-end-to-end.png) |
+| Engineering dossier (PDF, 7 pages) | [docs/Anupalan_Screen2_engineering_dossier.pdf](docs/Anupalan_Screen2_engineering_dossier.pdf) |
+| BOM, unit cost and calculations (Excel) | [docs/Anupalan_BOM_and_calculations.xlsx](docs/Anupalan_BOM_and_calculations.xlsx) |
+| Evaluation method and contempt backtest | [docs/EVALUATION.md](docs/EVALUATION.md) |
+| Court data used (open dataset, CC BY 4.0) | [Indian High Court Judgments on AWS Open Data](https://registry.opendata.aws/indian-high-court-judgments/) |
+
+[![Watch the Anupalan demo video](https://img.youtube.com/vi/uj6y0-Huw84/maxresdefault.jpg)](https://youtu.be/uj6y0-Huw84)
 
 When a court orders a department to act ("decide the representation within three months", "release the arrears within a fortnight"), the order sits inside a PDF. Government case trackers (LIMBS and state CCMS/LMS systems) record hearings and next dates, typed in by officers. Anupalan reads the order itself and does four things:
 
@@ -27,15 +40,14 @@ When a court orders a department to act ("decide the representation within three
 
 Method and caveats: [`docs/EVALUATION.md`](docs/EVALUATION.md).
 
-## Architecture
+## Architecture: how it works end to end
 
-```
-PDF ─► text / OCR ─► clean & re-flow ─► rule engine (candidate directions, exclusions)
-                                        └► LLM structuring (Claude, JSON; quote must match source word-for-word)
-                                         ─► deadline engine (deterministic, explained) ─► department mapping
-                                         ─► human review (confirm / edit / reject, audit trail)
-                                         ─► obligation register ─► alerts, dashboards, export to LIMBS/CCMS
-```
+![Anupalan end-to-end architecture](docs/architecture-end-to-end.png)
+
+1. **Court orders in**: open High Court data, court websites, or a department's upload.
+2. **Anupalan engine**: read (text or OCR) → find directions (rule engine) → structure them (Claude, quote must match word for word) → compute the deadline (deterministic rules, never the AI) → route to a government and department.
+3. **Human in the loop**: a legal officer confirms, edits or rejects each task beside its highlighted source sentence; confirmed tasks enter the obligation register with a full audit trail.
+4. **Outcomes**: alerts before the deadline and escalation after it, compliance dashboards, and export to LIMBS and state case trackers.
 
 | Module | Role |
 |---|---|
