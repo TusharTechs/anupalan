@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+data/*.db
+.env
+*.env
+submission/research/
+.DS_Store
+data/cache/
+submission/
+.claude/
+data/*.log

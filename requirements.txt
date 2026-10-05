@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+python-multipart
+python-dateutil
+pandas
+pyarrow
+anthropic
+pytest
+openpyxl

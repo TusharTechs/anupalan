@@ -1,0 +1,171 @@
+{
+ "cases": 293,
+ "captured": 265,
+ "captured_pct": 90,
+ "direct_pct": 84,
+ "dated": 192,
+ "dated_pct": 66,
+ "deadline_before_contempt": 185,
+ "deadline_before_contempt_pct": 96,
+ "median_lead_days": 89,
+ "median_order_to_contempt_days": 177,
+ "histogram": [
+  {
+   "label": "before deadline",
+   "count": 7
+  },
+  {
+   "label": "1-30",
+   "count": 40
+  },
+  {
+   "label": "31-60",
+   "count": 27
+  },
+  {
+   "label": "61-90",
+   "count": 26
+  },
+  {
+   "label": "91-180",
+   "count": 38
+  },
+  {
+   "label": "181-365",
+   "count": 30
+  },
+  {
+   "label": ">1 year",
+   "count": 24
+  }
+ ],
+ "method": "Contempt petitions (COCP) with an order in 2025 were sampled from the open Punjab & Haryana High Court dataset (CC-BY-4.0). Where the contempt order names the original order allegedly disobeyed, that original order (2022-2025) was located in the same dataset and processed by Anupalan exactly as a new order would be. 293 original orders were analysed.",
+ "examples": [
+  {
+   "orig_title": "CWP/17241/2022 of BALJINDER SINGH AND ANOTHER Vs STATE OF PUNJAB AND OTHERS",
+   "orig_order_date": "2022-08-06",
+   "first_due": "2022-09-10",
+   "cocp_filed": "2025-04-22",
+   "lead_days": 955,
+   "summary": "Decide the pending lease proposal by passing a speaking order",
+   "obligor": "Respondent No.3"
+  },
+  {
+   "orig_title": "CWP/28785/2023 of JAGAN NATH AND ORS Vs STATE OF HARYANA AND OTHERS",
+   "orig_order_date": "2023-12-20",
+   "first_due": "2024-03-13",
+   "cocp_filed": "2025-05-26",
+   "lead_days": 439,
+   "summary": "Decide representation on increment eligibility by passing speaking order within 8 weeks; extend benefits within 4 weeks if entitled.",
+   "obligor": "State of Haryana"
+  },
+  {
+   "orig_title": "CWP/17295/2023 of VIDYA @ VIDYA BAI Vs STATE OF PUNJAB AND OTHERS",
+   "orig_order_date": "2023-08-09",
+   "first_due": "2023-09-13",
+   "cocp_filed": "2024-11-21",
+   "lead_days": 435,
+   "summary": "Enter and sanction mutation of land in favour of petitioner in pursuance of judgment dated 15.11.2018",
+   "obligor": "Respondent No.2 - Deputy Commissioner, Ferozepur"
+  },
+  {
+   "orig_title": "CWP/8136/2019 of PARDEEP SETHI AND ORS Vs DAKSHIN HARYANA BIJLI VITRAN NIGAM LTD AND ANR",
+   "orig_order_date": "2024-02-07",
+   "first_due": "2024-03-14",
+   "cocp_filed": "2024-11-18",
+   "lead_days": 249,
+   "summary": "Calculate and pay arrears with monetary benefits and 6% interest from deemed promotion date.",
+   "obligor": "Dakshin Haryana Bijli Vitran Nigam Ltd."
+  },
+  {
+   "orig_title": "CWP/21220/2022 of RAM CHANDER Vs HARYANA WARE HOUSING CORPORATION AND OTHERS",
+   "orig_order_date": "2022-09-16",
+   "first_due": "2022-11-18",
+   "cocp_filed": "2023-06-28",
+   "lead_days": 222,
+   "summary": "Decide the petitioner's revision application within 8 weeks",
+   "obligor": "Respondent No.1 - Haryana Ware Housing Corporation"
+  },
+  {
+   "orig_title": "CWP/6530/2022 of AJAY Vs STATE OF HARYANA AND OTHERS",
+   "orig_order_date": "2024-08-14",
+   "first_due": "2024-10-14",
+   "cocp_filed": "2025-04-25",
+   "lead_days": 193,
+   "summary": "Consider petitioner for vacant ESM General category posts and appoint him subject to merit; create supernumerary post if required.",
+   "obligor": "State of Haryana and Respondent No.4-Commission"
+  },
+  {
+   "orig_title": "CWP/4846/2023 of HARJINDERPAL Vs STATE OF PUNJAB AND OTHERS",
+   "orig_order_date": "2024-09-26",
+   "first_due": "2024-11-28",
+   "cocp_filed": "2025-05-20",
+   "lead_days": 173,
+   "summary": "Calculate and pay interest at 6% per annum on delayed pensionary benefits from due date to actual payment date.",
+   "obligor": "State of Punjab"
+  },
+  {
+   "orig_title": "CWP/20692/2020 of MALKIAT SINGH Vs STATE OF PUNJAB AND OTHERS",
+   "orig_order_date": "2024-10-14",
+   "first_due": "2024-12-16",
+   "cocp_filed": "2025-05-13",
+   "lead_days": 148,
+   "summary": "Pass fresh order on petitioner's ACR upgradation representation and promotion claim to Principal PES-II",
+   "obligor": "State of Punjab"
+  },
+  {
+   "orig_title": "CWP/6107/2025 of RAJBIR SINGH AND OTHERS Vs STATE OF HARYANA AND OTHERS",
+   "orig_order_date": "2025-04-24",
+   "first_due": "2025-06-24",
+   "cocp_filed": "2025-11-03",
+   "lead_days": 132,
+   "summary": "Consider and decide the application for plot allotment under rehabilitation policy",
+   "obligor": "Respondent No.3"
+  },
+  {
+   "orig_title": "CWP/30068/2024 of MEDPAL NEHRA Vs STATE OF HARYANA AND ORS",
+   "orig_order_date": "2024-11-07",
+   "first_due": "2025-02-07",
+   "cocp_filed": "2025-05-26",
+   "lead_days": 108,
+   "summary": "Decide pending representation by passing a speaking order in accordance with law",
+   "obligor": "Respondent No.2 - Director, Secondary Education, Haryana"
+  },
+  {
+   "orig_title": "CWP/3828/2024 of ASHA RANI Vs STATE OF HARYANA AND OTHERS",
+   "orig_order_date": "2024-02-20",
+   "first_due": "2024-05-14",
+   "cocp_filed": "2024-07-26",
+   "lead_days": 73,
+   "summary": "Decide representation dated 17.09.2021 and release benefits within specified timeframes",
+   "obligor": "State of Haryana"
+  },
+  {
+   "orig_title": "CWP/7681/2023 of RUPINDER SINGH Vs STATE OF PUNJAB AND OTHERS",
+   "orig_order_date": "2024-12-13",
+   "first_due": "2025-03-20",
+   "cocp_filed": "2025-05-15",
+   "lead_days": 56,
+   "summary": "Decide petitioner's salary fixation claim and extend appropriate relief",
+   "obligor": "Anomaly Committee"
+  },
+  {
+   "orig_title": "CWP/1096/2025 of SUMAN Vs STATE OF HARYANA AND OTHERS",
+   "orig_order_date": "2025-02-17",
+   "first_due": "2025-04-17",
+   "cocp_filed": "2025-05-21",
+   "lead_days": 34,
+   "summary": "Take appropriate decision on petitioner's promotion case after verification within two months.",
+   "obligor": "State of Haryana"
+  },
+  {
+   "orig_title": "CWP/5735/2024 of LR/ASI HARJINDER SINGH Vs STATE OF PUNJAB AND OTHERS",
+   "orig_order_date": "2024-03-12",
+   "first_due": "2024-06-12",
+   "cocp_filed": "2024-07-02",
+   "lead_days": 20,
+   "summary": "Decide the petitioner's promotion claim within three months",
+   "obligor": "State of Punjab and others"
+  }
+ ]
+}
