@@ -3,24 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anupalan: Court-Direction Compliance Register</title>
+<title>Anupalan · Court-direction compliance register</title>
+<meta name="description" content="Anupalan turns High Court judgments into tracked, deadline-bound tasks for government departments, before they become contempt cases.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <aside class="side">
-  <div class="brand"><div class="logo">अ</div><div><b>Anupalan</b><small>Court-direction compliance register</small></div></div>
-  <nav>
-    <a href="#dashboard" data-view="dashboard">Dashboard</a>
-    <a href="#review" data-view="review">Review queue <span id="nav-pending" class="pill"></span></a>
-    <a href="#register" data-view="register">Obligation register</a>
-    <a href="#backtest" data-view="backtest">Backtest: contempt cases</a>
-    <a href="#upload" data-view="upload">Add a court order</a>
-    <a href="#about" data-view="about">How it works</a>
-  </nav>
+  <div class="brand"><img src="brand/logo-mark.svg" alt=""><div><b>Anupalan</b><small class="dev">अनुपालन</small></div></div>
+  <nav id="nav"></nav>
   <div class="side-foot" id="mode"></div>
 </aside>
 <main id="main"></main>
 <div id="drawer" class="drawer hidden"><div class="drawer-inner" id="drawer-inner"></div></div>
+<div id="tip" class="tip"></div>
 <div id="toast" class="toast hidden"></div>
 <script src="app.js"></script>
 </body>

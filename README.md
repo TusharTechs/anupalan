@@ -1,3 +1,5 @@
+<p align="center"><img src="web/brand/anupalan-logo-light.png" alt="Anupalan" width="420"></p>
+
 # Anupalan (अनुपालन): AI court-direction compliance register
 
 **Anupalan turns High Court judgments into tracked, deadline-bound tasks for government departments, before they become contempt cases.**

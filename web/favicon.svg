@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Anupalan">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22306B"/><stop offset="1" stop-color="#121B45"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <!-- court order: a page with a folded corner -->
+  <path d="M17 11h19.5L47 21.5V50a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V14a3 3 0 0 1 3-3z" fill="#FFFFFF"/>
+  <path d="M36.5 11v8a2.5 2.5 0 0 0 2.5 2.5h8z" fill="#C7D0EE"/>
+  <!-- lines of the order -->
+  <path d="M20.5 21.5h12M20.5 27.5h15" stroke="#22306B" stroke-width="3" stroke-linecap="round"/>
+  <!-- the last line becomes the tick: direction -> delivered -->
+  <path d="M20.5 40l6.2 6.2L43.5 30" fill="none" stroke="#F08A24" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
