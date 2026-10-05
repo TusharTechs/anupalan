@@ -4,6 +4,8 @@
 
 **Anupalan turns High Court judgments into tracked, deadline-bound tasks for government departments, before they become contempt cases.**
 
+**Live demo:** https://tushartechs.github.io/anupalan/ (read-only replay of 400 real Punjab & Haryana High Court orders)
+
 When a court orders a department to act ("decide the representation within three months", "release the arrears within a fortnight"), the order sits inside a PDF. Government case trackers (LIMBS and state CCMS/LMS systems) record hearings and next dates, typed in by officers. Anupalan reads the order itself and does four things:
 
 * it extracts **each direction**: what must be done, by which authority, under what conditions, with the exact source sentence;
