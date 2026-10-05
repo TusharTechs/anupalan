@@ -24,6 +24,7 @@ const P = {
   edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
   minus: '<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>',
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  chev: '<path d="m6 9 6 6 6-6"/>',
 };
 const icon = (n, st = "") => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${st ? ` style="${st}"` : ""}>${P[n]}</svg>`;
 const STATUS = {
@@ -178,7 +179,7 @@ const views = {
     const segs = [["", "All"], ["overdue", "Overdue"], ["due_30d", "Due ≤30d"], ["open", "Open"], ["no_fixed_deadline", "No date"], ["complied", "Complied"]];
     return pageHead("Obligation register", "One row per court-ordered task: what, who, by when, and where it stands.", asofChip()) +
     `<div class="filters"><div class="seg">${segs.map(([k, l]) => `<button class="${k === status ? "on" : ""}" onclick="go('register','${k}',$('#f-dept').value)">${l}</button>`).join("")}</div>
-      <select id="f-dept" onchange="go('register','${status}',this.value)"><option value="">All departments</option>${depts.map((x) => `<option ${x === dept ? "selected" : ""}>${esc(x)}</option>`).join("")}</select>
+      <select id="f-dept" aria-label="Filter by department" onchange="go('register','${status}',this.value)"><option value="">All departments</option>${depts.map((x) => `<option ${x === dept ? "selected" : ""}>${esc(x)}</option>`).join("")}</select>
       <span class="small">${rows.length} tasks</span></div>
     <div class="tbl"><table><tr><th>Status</th><th>Deadline</th><th>Case</th><th>What must be done</th><th>Responsible office</th><th>Review</th></tr>
     ${rows.slice(0, 400).map((o) => `<tr class="click" onclick="openOb(${o.order_id}, ${o.id})"><td>${badge(o.status)}</td><td><b>${o.due ? fmt(o.due) : "—"}</b><div class="small">${o.due ? (days(o.due) < 0 ? -days(o.due) + " days ago" : "in " + days(o.due) + " days") : "internal target"}</div></td>
@@ -219,6 +220,63 @@ const views = {
   },
 };
 
+// ---------- branded dropdown (replaces the OS-drawn <select> menu; keeps the native select for value + change events) ----------
+function enhanceSelects(root = document) {
+  root.querySelectorAll("select:not([data-dd])").forEach((sel) => {
+    sel.dataset.dd = "1";
+    const wrap = document.createElement("div");
+    wrap.className = "dd" + (sel.closest(".field") ? " block" : "");
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    sel.classList.add("dd-native");
+    sel.tabIndex = -1;
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "dd-btn";
+    btn.setAttribute("aria-haspopup", "listbox"); btn.setAttribute("aria-expanded", "false");
+    if (sel.getAttribute("aria-label")) btn.setAttribute("aria-label", sel.getAttribute("aria-label"));
+    const label = () => (sel.options[sel.selectedIndex] || {}).text || "";
+    btn.innerHTML = `<span>${esc(label())}</span>${icon("chev")}`;
+    wrap.appendChild(btn);
+    let menu = null, fi = -1;
+    const outside = (e) => { if (!wrap.contains(e.target)) close(); };
+    const close = () => { if (menu) menu.remove(); menu = null; btn.setAttribute("aria-expanded", "false"); document.removeEventListener("mousedown", outside, true); };
+    const focusOpt = () => { [...menu.children].forEach((d, i) => d.classList.toggle("focus", i === fi)); if (menu.children[fi]) menu.children[fi].scrollIntoView({ block: "nearest" }); };
+    const pick = (i) => {
+      const changed = i !== sel.selectedIndex;
+      sel.selectedIndex = i; btn.querySelector("span").textContent = label(); close(); btn.focus();
+      if (changed) sel.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+    const open = () => {
+      menu = document.createElement("div"); menu.className = "dd-menu"; menu.setAttribute("role", "listbox");
+      [...sel.options].forEach((o, i) => {
+        const d = document.createElement("div");
+        d.className = "dd-opt" + (i === sel.selectedIndex ? " sel" : ""); d.setAttribute("role", "option");
+        d.setAttribute("aria-selected", i === sel.selectedIndex ? "true" : "false");
+        d.innerHTML = `<span>${esc(o.text)}</span>${i === sel.selectedIndex ? icon("check") : ""}`;
+        d.onmousedown = (e) => { e.preventDefault(); pick(i); };
+        d.onmousemove = () => { fi = i; focusOpt(); };
+        menu.appendChild(d);
+      });
+      wrap.appendChild(menu);
+      if (menu.getBoundingClientRect().bottom > innerHeight - 8 && wrap.getBoundingClientRect().top > 340) menu.classList.add("up");
+      fi = Math.max(0, sel.selectedIndex); focusOpt();
+      btn.setAttribute("aria-expanded", "true");
+      document.addEventListener("mousedown", outside, true);
+    };
+    btn.onclick = () => (menu ? close() : open());
+    btn.onkeydown = (e) => {
+      if (!menu) { if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) { e.preventDefault(); open(); } return; }
+      if (e.key === "ArrowDown") { e.preventDefault(); fi = Math.min(fi + 1, sel.options.length - 1); focusOpt(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); fi = Math.max(fi - 1, 0); focusOpt(); }
+      else if (e.key === "Home") { e.preventDefault(); fi = 0; focusOpt(); }
+      else if (e.key === "End") { e.preventDefault(); fi = sel.options.length - 1; focusOpt(); }
+      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(fi); }
+      else if (e.key === "Escape") { e.preventDefault(); close(); }
+      else if (e.key === "Tab") close();
+    };
+  });
+}
+
 // ---------- obligation drawer ----------
 async function openOb(orderId, obId) {
   const o = await get(`/orders/${orderId}`);
@@ -243,15 +301,16 @@ async function openOb(orderId, obId) {
     ${(dl.assumptions || []).map((a) => `<div class="warn">Assumption: ${esc(a)}</div>`).join("")}
     <div class="field" style="margin-top:14px"><p class="label">What must be done</p><input id="e-action" value="${esc(ob.action_summary || ob.action_type)}"></div>
     <div class="field"><p class="label">Directed authority (as named in the order)</p><input id="e-obligor" value="${esc(ob.obligor || "")}"></div>
-    <div class="field"><p class="label">Responsible department <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(ob.department_evidence || "")}</span></p><select id="e-dept">${DEPTS.map((x) => `<option ${x === ob.department ? "selected" : ""}>${esc(x)}</option>`).join("")}</select></div>
+    <div class="field"><p class="label">Responsible department <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(ob.department_evidence || "")}</span></p><select id="e-dept" aria-label="Responsible department">${DEPTS.map((x) => `<option ${x === ob.department ? "selected" : ""}>${esc(x)}</option>`).join("")}</select></div>
     <div class="small">Extracted by ${esc(ob.source)} · confidence ${Math.round((ob.confidence || 0) * 100)}%</div>
     <div class="btns"><button class="btn ok" onclick="act(${ob.id},'confirm',${orderId})">${icon("check")}Confirm</button><button class="btn sec" onclick="act(${ob.id},'edit',${orderId})">${icon("edit")}Save edits &amp; confirm</button><button class="btn no" onclick="act(${ob.id},'reject',${orderId})">${icon("x")}Reject</button></div>
-    <div class="field"><p class="label">Compliance status</p><select id="e-comp" onchange="act(${ob.id},'status',${orderId})">${["open","in_progress","complied","under_appeal","stayed"].map((s) => `<option ${s === ob.compliance_status ? "selected" : ""} value="${s}">${s.replace("_", " ")}</option>`).join("")}</select></div>
+    <div class="field"><p class="label">Compliance status</p><select id="e-comp" aria-label="Compliance status" onchange="act(${ob.id},'status',${orderId})">${[["open","Open"],["in_progress","In progress"],["complied","Complied"],["under_appeal","Under appeal"],["stayed","Stayed"]].map(([s, l]) => `<option ${s === ob.compliance_status ? "selected" : ""} value="${s}">${l}</option>`).join("")}</select></div>
     <div class="section"><p class="label">Alert schedule</p><ul class="timeline">${(ob.alerts || []).map((a) => `<li class="${a.on < asOf() ? "past" : ""}"><b>${fmt(a.on)}</b>${esc(a.kind)}</li>`).join("")}</ul></div>
     <div class="section"><p class="label">Alert preview · to the nodal officer</p><div class="preview"><div class="from"><img src="brand/logo-mark.svg" alt="">Anupalan</div>Court-ordered task <b>${esc(o.case_no)}</b> (${esc(ob.department)}) is due on <b>${fmt(ob.due)}</b>: ${esc(ob.action_summary || "")}. Order dated ${fmt(o.decision_date)}. Mark compliance, or record an appeal or stay, to avoid contempt.</div></div>
     ${ev && ev.length ? `<div class="section"><p class="label">Audit trail</p><ul class="timeline">${ev.map((e) => `<li><b>${esc(e.ts.slice(0, 16).replace("T", " "))}</b>${esc(e.actor)} · ${esc(e.action)}${e.detail ? " · " + esc(e.detail) : ""}</li>`).join("")}</ul></div>` : ""}
   </div></div>`;
   $("#drawer").classList.remove("hidden");
+  enhanceSelects($("#drawer-inner"));
   const m = document.getElementById("m" + ob.id), ot = $("#otext");
   if (m && ot) ot.scrollTop = m.offsetTop - ot.offsetTop - ot.clientHeight / 3;
   $("#drawer-inner").scrollTop = 0;
@@ -274,7 +333,7 @@ async function render(scroll = true) {
   $("#nav").innerHTML = NAV.map(([k, l, i]) => `<a href="#${k}" data-view="${k}" class="${k === view ? "active" : ""}">${icon(i)}${l}${k === "review" ? '<span id="nav-pending" class="pill"></span>' : ""}</a>`).join("");
   document.querySelectorAll("nav a").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); go(a.dataset.view); }));
   $("#main").innerHTML = await views[view](...args);
-  bindCharts(); refreshBadge();
+  bindCharts(); refreshBadge(); enhanceSelects($("#main"));
   if (scroll) window.scrollTo(0, 0);
   if (view === "upload" && S.live) bindUpload();
 }

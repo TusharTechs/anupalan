@@ -153,3 +153,17 @@ mark{background:var(--hl);padding:1px 2px;border-radius:3px;box-shadow:0 0 0 2px
 .why{list-style:none;margin:0;padding:0}.why li{padding:9px 0 9px 14px;border-bottom:1px solid var(--line-2);font-size:13px;color:var(--ink-2);position:relative}
 .why li:last-child{border-bottom:0}.why li:before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:2px;background:var(--saffron)}
 .why b{display:block;color:var(--ink);font-size:13.5px}
+
+/* branded dropdown */
+.dd{position:relative;display:inline-block}.dd.block{display:block}
+.dd-native{position:absolute!important;opacity:0;pointer-events:none;width:1px!important;height:1px!important;padding:0!important;border:0!important;min-width:0!important}
+.dd-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:220px;padding:9px 12px 9px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;box-shadow:var(--shadow);cursor:pointer;font-weight:600;color:var(--ink);text-align:left}
+.dd.block .dd-btn{width:100%;min-width:0;box-shadow:none;border-radius:10px;font-weight:500}
+.dd-btn:hover{border-color:#C9D2F0}.dd-btn:focus-visible,.dd-btn[aria-expanded="true"]{outline:none;border-color:#9AA8DD;box-shadow:0 0 0 3px rgba(34,48,107,.12)}
+.dd-btn svg{width:17px;height:17px;color:var(--ink-3);flex:none;transition:transform .15s}.dd-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.dd-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd-menu{position:absolute;top:calc(100% + 6px);left:0;min-width:100%;width:max-content;max-width:360px;max-height:320px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 44px rgba(20,27,58,.16);padding:6px;z-index:80}
+.dd-menu.up{top:auto;bottom:calc(100% + 6px)}
+.dd-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 11px;border-radius:9px;cursor:pointer;font-size:14px;color:var(--ink-2)}
+.dd-opt.focus{background:var(--navy-soft);color:var(--ink)}.dd-opt.sel{font-weight:700;color:var(--navy)}
+.dd-opt svg{width:15px;height:15px;color:var(--saffron);flex:none}
