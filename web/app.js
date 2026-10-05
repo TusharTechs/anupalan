@@ -47,7 +47,7 @@ async function get(path) {
   if (!url) return null;
   const data = await (await fetch(url)).json(), edits = local(), patch = (o) => (edits[o.id] ? { ...o, ...edits[o.id] } : o);
   if (Array.isArray(data)) return data.map(patch);
-  if (data.obligations) data.obligations = data.obligations.map(patch);
+  if (Array.isArray(data.obligations)) data.obligations = data.obligations.map(patch);
   return data;
 }
 async function post(path, body) {
